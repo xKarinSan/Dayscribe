@@ -1,6 +1,5 @@
 from generate_txt import *
-
-if __name__ == "__main__":
+def generate_with_fixed_range():
     # start_date_str = input("Start date: (DD/MM/YYYY)")
     start_date_str = "30/6/2025"
     start_date = get_date(start_date_str)
@@ -26,3 +25,5 @@ if __name__ == "__main__":
         print("Error processing.")
         exit()
         
+if __name__ == "__main__":
+    generate_with_fixed_range()

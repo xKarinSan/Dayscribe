@@ -1,6 +1,11 @@
 from datetime import datetime, timedelta
-from const import months_arr, base_path
+from const import months_arr
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
+folder_name = os.environ.get("FOLDER_NAME") or "records"
+base_path = os.path.join("base", folder_name)
 
 def precompute(start_date: datetime,end_date:datetime):
     try:

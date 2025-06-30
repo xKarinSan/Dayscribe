@@ -13,4 +13,3 @@ months_arr = [
     "Nov",
     "Dec"
 ]
-base_path = "./records"
