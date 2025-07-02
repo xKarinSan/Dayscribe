@@ -1,4 +1,5 @@
-from generate_txt import *
+from .generate_txt import *
+from common.tools import get_date, precompute
 def generate_with_fixed_range():
     # start_date_str = input("Start date: (DD/MM/YYYY)")
     start_date_str = "30/6/2025"

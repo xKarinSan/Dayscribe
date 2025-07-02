@@ -1,23 +1,6 @@
-from datetime import datetime, timedelta
-from const import months_arr
-from dotenv import load_dotenv
+from common.const import months_arr, base_path
 import os
 
-load_dotenv()
-folder_name = os.environ.get("FOLDER_NAME") or "records"
-base_path = os.path.join("base", folder_name)
-
-def precompute(start_date: datetime,end_date:datetime):
-    try:
-        delta = end_date - start_date
-        all_dates = []
-        for i in range(delta.days + 1):
-            current_date = start_date + timedelta(days=i)
-            if current_date.weekday() < 5:
-                all_dates.append(current_date)
-        return all_dates        
-    except:
-        return None
 
 def create_files(precomputed_dates):
     if not precomputed_dates:
@@ -37,6 +20,10 @@ def create_files(precomputed_dates):
     for year_month in year_month_dict:
         record_path = f"{base_path}/{year_month}"
         os.makedirs(record_path, exist_ok=True)
+        timesheet_path =  f"{record_path}/timesheet.txt"
+        with open(timesheet_path,"w") as timesheet:
+            timesheet.close()
+        
         for date_str in year_month_dict[year_month]:
             txt_path = f"{record_path}/{date_str}.txt"
             with open(txt_path,"w") as file:
@@ -51,10 +38,3 @@ def create_files(precomputed_dates):
                     " - task3\n"
                 )    
 
-def get_date(date_str): 
-    try:
-        day, month, year = date_str.split("/")
-        return datetime(int(year),int(month),int(day))
-    except:
-        print("Invalid date format!")
-        return None
