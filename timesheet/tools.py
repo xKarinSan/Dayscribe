@@ -26,9 +26,6 @@ def clock():
         print("Clock-in recorded (new file).")
         return
     
-    clock_out = input('Type "Y" to clock out. Anything else to cancel: ')
-    if clock_out.lower() != "y":
-        return
     
     with open(timesheet_path, "r") as f:
         lines = f.readlines()
@@ -38,12 +35,18 @@ def clock():
         for line in lines:
             if line.startswith(day_string):
                 if '-' not in line:
+                    clock_out = input('Type "Y" to clock out. Anything else to cancel: ')
+                    if clock_out.lower() != "y":
+                        return
                     line = line.strip() + f"-{hour_minute}\n"
                     print("Clock-out recorded.")
                     updated = True
             f.write(line)
             
         if not updated:
+            clock_in = input('Type "Y" to clock in. Anything else to cancel: ')
+            if clock_in.lower() != "y":
+                return
             f.write(f"{day_string} {hour_minute}\n")
             print("Clock-in recorded (new entry).")
         
