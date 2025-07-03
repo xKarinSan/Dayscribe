@@ -28,4 +28,5 @@ def generate_with_fixed_range():
         
 if __name__ == "__main__":
     # generate_with_fixed_range()
-    write_today()
+    # write_today()
+    write_tomorrow()

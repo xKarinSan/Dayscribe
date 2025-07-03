@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime,timedelta
 from common.const import months_arr, base_path
 from common.tools import get_date
 
@@ -49,6 +49,33 @@ def capture_multiline_input(prompt="Paste your logs below. Type 'EOF' on a new l
             break
         lines.append(line)
     return "\n".join(lines)
+
+def write_tomorrow():
+    current_date = datetime.now()
+    tomorrow_date = current_date + timedelta(1)\
+    
+    day = tomorrow_date.day
+    month = tomorrow_date.month
+    year = tomorrow_date.year
+    
+    date_str = f"{year}.{month}.{day}"
+    year_month = f"{months_arr[month]} {year}"
+    
+    record_path = f"{base_path}/{year_month}"
+    os.makedirs(record_path, exist_ok=True)
+    txt_path = f"{record_path}/{date_str}.txt"
+    with open(txt_path,"w") as file:
+        file.write(
+            "Done:\n"
+            " - accomplishment1\n"
+            " - accomplishment2\n"
+            " - accomplishment3\n\n"
+            "To Do:\n"
+            " - task1\n"
+            " - task2\n"
+            " - task3\n"
+        )
+    print("Tommorow's logs done!")
 
 def write_today():
     current_date = datetime.now()
