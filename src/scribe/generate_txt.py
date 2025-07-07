@@ -1,9 +1,11 @@
 from datetime import datetime,timedelta
-from common.const import months_arr, base_path
-from common.tools import get_date
+from ..common.const import months_arr, base_path
+from agents import function_tool
 
 import os
 
+
+# testing purpose
 def create_files(precomputed_dates):
     if not precomputed_dates:
         return
@@ -50,7 +52,7 @@ def capture_multiline_input(prompt="Paste your logs below. Type 'EOF' on a new l
         lines.append(line)
     return "\n".join(lines)
 
-def write_tomorrow():
+def generate_tomorrow():
     current_date = datetime.now()
     tomorrow_date = current_date + timedelta(1)\
     
@@ -109,9 +111,36 @@ def write_today():
 
     print("Scribe overwritten.")
     
+# =============== AGENT TEST
+@function_tool
+def generate_at_date(year: int, month: int, day: int) -> str:
+    """
+    Generate a preformatted log file for a specific date.
+
+    - Inputs: year, month, and day.
+    - Creates a text file containing:
+        • A 'Done' section with placeholder accomplishments.
+        • A 'To Do' section with placeholder tasks.
+    - Saves the file under a folder for the specified month and year.
+    """
+
     
+    date_str = f"{year}.{month}.{day}"
+    print(date_str)
+    year_month = f"{months_arr[month]} {year}"
     
-    
-    
-    
-    
+    record_path = f"{base_path}/{year_month}"
+    os.makedirs(record_path, exist_ok=True)
+    txt_path = f"{record_path}/{date_str}.txt"
+    with open(txt_path,"w") as file:
+        file.write(
+            "Done:\n"
+            " - accomplishment1\n"
+            " - accomplishment2\n"
+            " - accomplishment3\n\n"
+            "To Do:\n"
+            " - task1\n"
+            " - task2\n"
+            " - task3\n"
+        )
+    return f"Log template created for {day}/{month}/{year} at {txt_path}"
